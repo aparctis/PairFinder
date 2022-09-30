@@ -23,10 +23,17 @@ namespace PairFinder
         private int checkingIndex;
         public bool clickAble = true;
 
+        //visual part
+        [SerializeField] private float waitToClose;
+        [SerializeField] private float waitToRemove;
+        private float waitToRestart;
+
+
         //SCORE
         //then less time was needed to find a pair - then higher score
         private int curentScore = 0;
         [SerializeField] private TextMeshProUGUI scoreText;
+        [SerializeField] private TextMeshProUGUI recordText;
 
         private bool scoreTimerStart = false;
         [SerializeField] private int maxScoreForPair = 10;
@@ -37,12 +44,37 @@ namespace PairFinder
 
         private int curentScoreForPair;
 
+        //record
+        private bool recordAble = false;
+        private int recordScore;
+        [SerializeField] private GameObject particlesForRecord;
+
+
+        //Sounds
+        private AudioSource audio;
+        private bool soundsInGame = true;
+
+        [SerializeField] private AudioClip open_sound;
+        [SerializeField] private AudioClip close_sound;
+        [SerializeField] private AudioClip remove_sound;
+        [SerializeField] private AudioClip record_sound;
+        [SerializeField] private AudioClip newgame_sound;
+
+
 
         #region Unity Events
         void Start()
         {
             InitGameField();
-            ScoreUpdate(0);
+            waitToRestart = waitToRemove + 1.0f;
+
+            //download record
+            recordScore = PlayerPrefs.GetInt("record");
+            recordText.text = ("record: " + recordScore);
+
+            //initialize audio
+            audio = GetComponent<AudioSource>();
+
         }
 
         void Update()
@@ -159,6 +191,13 @@ namespace PairFinder
             }
             clickAble = true;
 
+            recordAble = true;
+            particlesForRecord.SetActive(false);
+
+            curentScore = 0;
+            ScoreUpdate(0);
+
+
         }
         #endregion
 
@@ -171,17 +210,21 @@ namespace PairFinder
                 checkingSprite = sprite;
                 checkingIndex = index;
                 scoreTimerStart = true;
+
+                if (soundsInGame) PlayOpen();
             }
 
             else
             {
                 clickAble = false;
+                if (soundsInGame) PlayOpen();
 
                 if (checkingIndex == index)
                 {
-                    //remove sprites
-                    checkingSprite.Invoke("RemoveSprite", 0.5f);
-                    sprite.Invoke("RemoveSprite", 0.5f);
+                    //remove sprites and play sound
+                    checkingSprite.Invoke("RemoveSprite", waitToRemove);
+                    sprite.Invoke("RemoveSprite", waitToRemove);
+                    if (soundsInGame) Invoke("PlayRemove", waitToRemove);
                     //add score for pair and reload timer
                     ScoreUpdate(curentScoreForPair);
                     DropScoreTimer();
@@ -189,15 +232,20 @@ namespace PairFinder
                     imagessInGame--;
                     if (imagessInGame == 0)
                     {
-                        Invoke("InitGameField", 0.5f);
+                        Invoke("InitGameField", waitToRestart);
+                        if (soundsInGame) Invoke("PlayNewGame", waitToRestart);
+                        
+
                     }
                 }
 
                 else
                 {
-                    //close sprites
-                    checkingSprite.Invoke("CloseSprite", 0.5f);
-                    sprite.Invoke("CloseSprite", 0.5f);
+                    //close sprites and play sound
+                    checkingSprite.Invoke("CloseSprite", waitToClose);
+                    sprite.Invoke("CloseSprite", waitToClose);
+                    if (soundsInGame) Invoke("PlayClose", waitToClose);
+                   
                     //reload score timer
                     DropScoreTimer();
 
@@ -206,11 +254,18 @@ namespace PairFinder
             }
         }
 
+
+        #region Score and records
         //Score
         private void ScoreUpdate(int addedScore)
         {
             curentScore += addedScore;
             scoreText.text = ("Score: " + curentScore);
+
+            //checking record
+            if (curentScore > recordScore) NewRecord();
+
+
         }
         private void ScoreTimer()
         {
@@ -227,6 +282,68 @@ namespace PairFinder
             curentScoreForPair = maxScoreForPair;
             scoreTime = 0;
         }
+        
+        //record
+        private void NewRecord()
+        {
 
+            recordScore = curentScore;
+            PlayerPrefs.SetInt("record", recordScore);
+            recordText.text = ("record: " + recordScore);
+
+            if (recordAble)
+            {
+                if (soundsInGame) PlayRecord();
+                particlesForRecord.SetActive(true);
+                recordAble = false;
+            }
+
+        }
+        #endregion
+
+        #region Sounds
+        private void PlayOpen()
+        {
+            audio.clip = open_sound;
+            audio.Play();
+        }
+
+        private void PlayClose()
+        {
+            audio.clip = close_sound;
+            audio.Play();
+        }
+
+        private void PlayRemove()
+        {
+            audio.clip = remove_sound;
+            audio.Play();
+        }
+
+        private void PlayNewGame()
+        {
+            audio.clip = newgame_sound;
+            audio.Play();
+        }
+        private void PlayRecord()
+        {
+            audio.clip = record_sound;
+            audio.Play();
+        }
+
+        public void SoundSwitch()
+        {
+            if (soundsInGame)
+            {
+                soundsInGame = false;
+                
+            }
+
+            else
+            {
+                soundsInGame = true;
+            }
+        }
+        #endregion
     }
 }

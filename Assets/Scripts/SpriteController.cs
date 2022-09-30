@@ -10,10 +10,14 @@ namespace PairFinder
         [SerializeField] private Sprite backSprite;
         [SerializeField] private Sprite frontSprite;
 
+        private int spriteIndex;
         private bool isOpen = false;
+
         [SerializeField] private GameField gameField;
 
-        private  int spriteIndex;
+        //visual
+        [SerializeField] private bool useParticles;
+        [SerializeField] private GameObject particles;
 
 
         void Start()
@@ -46,6 +50,8 @@ namespace PairFinder
         //Sprite actions
         private void OpenSprite()
         {
+            if(useParticles) particles.SetActive(false);
+
             ren.sprite = backSprite;
             isOpen = true;
             gameField.CheckMe(this, spriteIndex);
@@ -54,6 +60,8 @@ namespace PairFinder
 
         public void CloseSprite()
         {
+            if (useParticles) particles.SetActive(false);
+
             ren.sprite = frontSprite;
             isOpen = false;
 
@@ -62,6 +70,8 @@ namespace PairFinder
 
         public void RemoveSprite()
         {
+            if (useParticles) particles.SetActive(true);
+
             ren.sprite = frontSprite;
             isOpen = false;
             gameObject.SetActive(false);
