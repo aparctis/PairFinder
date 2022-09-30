@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 namespace PairFinder
 {
@@ -21,18 +23,33 @@ namespace PairFinder
         private int checkingIndex;
         public bool clickAble = true;
 
+        //SCORE
+        //then less time was needed to find a pair - then higher score
+        private int curentScore = 0;
+        [SerializeField] private TextMeshProUGUI scoreText;
+
+        private bool scoreTimerStart = false;
+        [SerializeField] private int maxScoreForPair = 10;
+        [SerializeField] private int minScoreForPair = 1;
+
+        [SerializeField] private float secondsToLoseScorePoint = 0.25f;
+        private float scoreTime = 0;
+
+        private int curentScoreForPair;
+
+
         #region Unity Events
         void Start()
         {
             InitGameField();
-
+            ScoreUpdate(0);
         }
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (scoreTimerStart)
             {
-                InitGameField();
+                ScoreTimer();
             }
         }
         #endregion
@@ -146,13 +163,14 @@ namespace PairFinder
         #endregion
 
 
-
+        //Checking chosen sprite
         public void CheckMe(SpriteController sprite, int index)
         {
             if (checkingSprite == null)
             {
                 checkingSprite = sprite;
                 checkingIndex = index;
+                scoreTimerStart = true;
             }
 
             else
@@ -161,8 +179,13 @@ namespace PairFinder
 
                 if (checkingIndex == index)
                 {
+                    //remove sprites
                     checkingSprite.Invoke("RemoveSprite", 0.5f);
                     sprite.Invoke("RemoveSprite", 0.5f);
+                    //add score for pair and reload timer
+                    ScoreUpdate(curentScoreForPair);
+                    DropScoreTimer();
+                    //update active pair count 
                     imagessInGame--;
                     if (imagessInGame == 0)
                     {
@@ -172,15 +195,38 @@ namespace PairFinder
 
                 else
                 {
+                    //close sprites
                     checkingSprite.Invoke("CloseSprite", 0.5f);
                     sprite.Invoke("CloseSprite", 0.5f);
+                    //reload score timer
+                    DropScoreTimer();
+
                 }
                 checkingSprite = null;
             }
         }
 
-
-
+        //Score
+        private void ScoreUpdate(int addedScore)
+        {
+            curentScore += addedScore;
+            scoreText.text = ("Score: " + curentScore);
+        }
+        private void ScoreTimer()
+        {
+            scoreTime += Time.deltaTime;
+            if (scoreTime >= secondsToLoseScorePoint)
+            {
+                if (curentScoreForPair > minScoreForPair) curentScoreForPair--;
+                scoreTime = 0;
+            }
+        }
+        private void DropScoreTimer()
+        {
+            scoreTimerStart = false;
+            curentScoreForPair = maxScoreForPair;
+            scoreTime = 0;
+        }
 
     }
 }

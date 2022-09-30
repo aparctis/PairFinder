@@ -13,8 +13,8 @@ namespace PairFinder
         private bool isOpen = false;
         [SerializeField] private GameField gameField;
 
+        private  int spriteIndex;
 
-        public int spriteIndex;
 
         void Start()
         {
@@ -63,6 +63,7 @@ namespace PairFinder
         public void RemoveSprite()
         {
             ren.sprite = frontSprite;
+            isOpen = false;
             gameObject.SetActive(false);
             if (!gameField.clickAble) gameField.clickAble = true;
 
