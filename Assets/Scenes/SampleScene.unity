@@ -531,6 +531,7 @@ GameObject:
   - component: {fileID: 1062372318}
   - component: {fileID: 1062372317}
   - component: {fileID: 1062372316}
+  - component: {fileID: 1062372319}
   m_Layer: 5
   m_Name: musicOffButton
   m_TagString: Untagged
@@ -676,6 +677,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062372314}
   m_CullTransparentMesh: 1
+--- !u!114 &1062372319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062372314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 3.11, y: -2.56}
+  m_UseGraphicAlpha: 0
 --- !u!1 &1266581174
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,6 +830,7 @@ GameObject:
   - component: {fileID: 1386547459}
   - component: {fileID: 1386547458}
   - component: {fileID: 1386547457}
+  - component: {fileID: 1386547460}
   m_Layer: 5
   m_Name: soundOffButton
   m_TagString: Untagged
@@ -959,6 +976,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1386547455}
   m_CullTransparentMesh: 1
+--- !u!114 &1386547460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386547455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 3.11, y: -2.56}
+  m_UseGraphicAlpha: 0
 --- !u!1 &1420510898
 GameObject:
   m_ObjectHideFlags: 0
@@ -1578,6 +1610,7 @@ GameObject:
   - component: {fileID: 1901744195}
   - component: {fileID: 1901744194}
   - component: {fileID: 1901744193}
+  - component: {fileID: 1901744197}
   m_Layer: 5
   m_Name: soundButton
   m_TagString: Untagged
@@ -1723,6 +1756,21 @@ RectTransform:
   m_AnchoredPosition: {x: 80, y: 100}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1901744197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901744192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 3.11, y: -2.56}
+  m_UseGraphicAlpha: 0
 --- !u!1 &2144997487
 GameObject:
   m_ObjectHideFlags: 0
@@ -1735,6 +1783,7 @@ GameObject:
   - component: {fileID: 2144997491}
   - component: {fileID: 2144997490}
   - component: {fileID: 2144997489}
+  - component: {fileID: 2144997492}
   m_Layer: 5
   m_Name: musicButton
   m_TagString: Untagged
@@ -1880,6 +1929,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144997487}
   m_CullTransparentMesh: 1
+--- !u!114 &2144997492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2144997487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 3.11, y: -2.56}
+  m_UseGraphicAlpha: 0
 --- !u!1 &1194369560443764115
 GameObject:
   m_ObjectHideFlags: 0
